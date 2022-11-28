@@ -1,0 +1,37 @@
+containers:
+  default:
+    build:
+      from: ubuntu-latest
+      type: ci
+  lint:
+    docker: gcr.io/shopify-docker-images/golangci/golangci-lint:latest
+
+steps:
+  - label: Tests
+    timeout: 5m
+    run:
+      - go test -v -race -cover ./...
+    cache:
+      - path: /root/go/pkg/mod
+        digest:
+          - go.sum
+        scope: test
+      - path: /root/.cache/go-build
+        digest:
+          - go.sum
+        scope: test
+  - label: Lint
+    container: lint
+    run:
+      - golangci-lint run ./...
+      - test -z $(go fmt ./...)
+    timeout: 10m
+    cache:
+      - path: /go/pkg/mod
+        digest:
+          - go.sum
+        scope: lint
+      - path: /home/linter/.cache/
+        digest:
+          - go.sum
+        scope: lint
