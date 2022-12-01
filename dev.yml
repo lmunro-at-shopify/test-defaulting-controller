@@ -12,10 +12,11 @@ up:
   - kind:
       name: defaulting-controller
       image: kindest/node:v1.22.15
+      config: cluster_config.yml
   - custom:
       name: Install kubebuilder
       met?: test -x bin/kubebuilder
-      meet: curl -L -o bin/kubebuilder https://go.kubebuilder.io/dl/latest/$(go env GOOS)/$(go env GOARCH); chmod +x bin/kubebuilder
+      meet: mkdir bin; curl -L -o bin/kubebuilder https://go.kubebuilder.io/dl/latest/$(go env GOOS)/$(go env GOARCH); chmod +x bin/kubebuilder
       down: rm -f bin/kubebuilder
 
 

@@ -1,0 +1,6 @@
+domain: shopify.io
+layout:
+- go.kubebuilder.io/v3
+projectName: test-defaulting-controller
+repo: lmunro-at-shopify/test-defaulting-controller
+version: "3"
