@@ -1,0 +1,7 @@
+# Questions to be answered
+
+Q. Can we tell the difference between a resource being created or updated?
+A. Yes. Admission control requests have a field "operation" that will be set to either "CREATE", "UPDATE", "DELETE" depending on the actual change. We can use that to make decisions in the handler based on the operation (e.g. ignore updates on statefulsets). We can also register webhooks per operation type, so we could have an entirely different handler for updates vs creations.
+
+Q. 
+

@@ -11,17 +11,23 @@ webhooks:
     service:
       name: webhook-service
       namespace: system
-      path: /mutating-apps-v1-deployment
+      path: /showback-defaulter-v1
   failurePolicy: Ignore
-  name: defaulter.shopify.io
+  name: showbackboss.shopify.io
   rules:
   - apiGroups:
+    - ""
     - apps
+    - batch
     apiVersions:
-    - v1
+    - '*'
     operations:
     - CREATE
     - UPDATE
     resources:
+    - cronjobs
+    - jobs
+    - daemonsets
     - deployments
+    - statefulsets
   sideEffects: None

@@ -16,7 +16,7 @@ limitations under the License.
 
 package main
 
-//+kubebuilder:rbac:groups=core,resources=namespace,verbs=watch;list;get
+//+kubebuilder:rbac:groups=core,resources=namespaces,verbs=watch;list;get
 
 import (
 	"flag"
@@ -114,7 +114,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	mgr.GetWebhookServer().Register("/mutating-apps-v1-deployment", &webhook.Admission{Handler: &showback.Defaulter{Client: mgr.GetClient(), NamespaceInformer: &namespaceInformer}})
+	mgr.GetWebhookServer().Register("/showback-defaulter-v1", &webhook.Admission{Handler: &showback.Handler{Client: mgr.GetClient(), NamespaceInformer: &namespaceInformer}})
 
 	setupLog.Info("starting manager")
 	if err := mgr.Start(ctrl.SetupSignalHandler()); err != nil {
